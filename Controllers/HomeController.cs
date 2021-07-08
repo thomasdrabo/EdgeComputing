@@ -111,15 +111,13 @@ namespace Edge.Controllers
         [Route("StopContainer/{containerID}")]
         public async Task<ActionResult> StopContainer(string containerID)
         {
-            _dockerClient.Containers.KillContainerAsync(containerID, new ContainerKillParameters());
-        
+            await _dockerClient.Containers.KillContainerAsync(containerID, new ContainerKillParameters());
             return View("ContainerList");
         }
 
         public async Task<ActionResult> StartContainer(string containerID)
         {
-            _dockerClient.Containers.StartContainerAsync(containerID, new ContainerStartParameters());
-
+            await _dockerClient.Containers.StartContainerAsync(containerID, new ContainerStartParameters());
             return View("ContainerList");
         }
     }
