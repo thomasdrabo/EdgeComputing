@@ -30,14 +30,16 @@
         <input type="button" value="List" onclick="location.href='@Url.Action("ContainerList")'" />
     </div>
 
-    <div>
+<div>
+    <input type="button" value="Create" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
+</div>
 
-
-        <input type="button" value="Create" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
-
-    </div>
+<div>
+    <input type="button" value="Test" onclick="location.href='@Url.Action("CiscoSwitchConnectionSSH")'" />
+</div>
 }
 else
 {
     <h1>You need to be connected</h1>
 }
+
