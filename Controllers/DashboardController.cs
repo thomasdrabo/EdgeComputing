@@ -14,9 +14,9 @@ using Renci.SshNet;
 
 namespace Edge.Controllers
 {
-    public class HomeController : Controller
+    public class RouterController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<RouterController> _logger;
         private readonly DockerClient _dockerClient;
         private string DockerApiUri()
         {
@@ -38,18 +38,13 @@ namespace Edge.Controllers
         }
        
 
-        public HomeController(ILogger<HomeController> logger)
+        public RouterController(ILogger<RouterController> logger)
         {
             _logger = logger;
             _dockerClient = new DockerClientConfiguration(new Uri(DockerApiUri())).CreateClient();
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Contact()
         {
             return View();
         }
@@ -96,7 +91,7 @@ namespace Edge.Controllers
                 }
                 ssh.Disconnect();
             }
-            return View("Home");
+            return View("Router");
     
         }
 
@@ -111,7 +106,7 @@ namespace Edge.Controllers
                     new AuthConfig(),
                     new Progress<JSONMessage>());
 
-            return View("Home");
+            return View("Router");
         }
 
         public async Task<ActionResult> ContainerListAsync()
