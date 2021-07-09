@@ -8,38 +8,51 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <h1 class="mr-auto">Dashboard</h1>
+    <p>Orchestrez les routeurs depuis ce panneau.</p>
 </div>
 
 @if (SignInManager.IsSignedIn(User))
 {
-
-    <div>
-        <form action="">
-            <h1>Entrer le fichier à télécharger</h1>
-            <label for="file">Package IOX</label>
-            <input id="file " type="file" />
-            <button type="submit">Load on switch</button>
+<section class="row">
+    <div class="col-6 p-2">
+        <form class="card p-2">
+            <h5>Uploader un Package IOX</h5>
+            <hr class="mt-1 mb-2" />
+            <p>Ici vous pouvez envoyer un Package au format IOX vers le routeur CISCO Catalyst.</p>
+            <div class="form-group">
+                <label for="file">Package IOX</label>
+                <input id="file" class="form-control-file" type="file" />
+            </div>
+            <button class="btn p-1 btn-light" type="submit">Uploader</button>
         </form>
     </div>
-
-    <div>
-        <h1>Lister les containers actifs</h1>
-        <input type="button" value="List" onclick="location.href='@Url.Action("ContainerList")'" />
+    <div class="col-6 p-2">
+        <div class="card p-2">
+            <h5>Gestion des containers locaux</h5>
+            <hr class="mt-1 mb-2" />
+            <p>Ici vous pouvez accéder aux containers présent sur votre machine.</p>
+            <div class="form-group">
+                <label for="file">Liste des containers</label>
+                <input type="button" class="btn btn-light w-100" value="Liste" onclick="location.href='@Url.Action("ContainerList")'" />
+            </div>
+            <div class="form-group">
+                <label for="file">Créer un package IOX</label>
+                <input type="button" class="btn btn-light w-100" value="Créer" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
+            </div>
+            <div class="form-group">
+                <label for="file">Tester des trucs</label>
+                <input type="button" class="btn btn-light w-100" value="Test" onclick="location.href='@Url.Action("CiscoSwitchConnectionSSH")'" />
+                <small>(conséquence inconnu, pouvant déformer irrémédiablement le continuum spatio-temporel, à utiliser avec parcimonie.)</small>
+            </div>
+        </div>
     </div>
-
-<div>
-    <input type="button" value="Create" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
-</div>
-
-<div>
-    <input type="button" value="Test" onclick="location.href='@Url.Action("CiscoSwitchConnectionSSH")'" />
-</div>
+</section>
 }
 else
 {
     <h1>You need to be connected</h1>
+    <img src="~/images/bg-banner.jpg" class="img" alt="My image" />
 }
 

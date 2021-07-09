@@ -15,7 +15,7 @@ namespace Edge.Controllers
 
         public ActionResult RedirectLogin()
         {
-            return View("_LoginPartial");
+            return View("Shared_LoginPartial");
         }
     }
 }
