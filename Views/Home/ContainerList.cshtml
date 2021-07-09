@@ -12,7 +12,7 @@
             <th>Image</th>
             <th>Created</th>
             <th>Name</th>
-            <th>IP | Private & Public Port | Type</th>
+            <th>Type | Private & Public Port </th>
             <th>Status</th>
             <th>Start/Stop</th>
         </tr>
@@ -32,17 +32,17 @@
             <td>
                 @foreach (var p in item.Ports)
                 {
-                    @Html.Raw(p.IP + " | ")
+                    @Html.Raw(p.Type + " | ")
                     @Html.Raw(p.PrivatePort.ToString() + " | ")
                     @Html.Raw(p.PublicPort.ToString() + " | ")
-                    @Html.Raw(p.Type)
                 }
             </td>
             <td>
                 @Html.Raw(item.Status)
             </td>
             <td>
-             @Html.ActionLink("Stop", "StopContainer", new { containerID = item.ID })'
+             @Html.ActionLink("Stop | ", "StopContainer", new { containerID = item.ID })
+             @Html.ActionLink("Start ", "StartContainer", new { containerID = item.ID })
             </td>
         </tr>
 }
