@@ -11,16 +11,13 @@ using Docker.DotNet.Models;
 using System.IO;
 using System.Runtime.InteropServices;
 using Renci.SshNet;
-using System.Text.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Edge.Controllers
 {
-    public class HomeController : Controller
+    public class DashboardController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<DashboardController> _logger;
         private readonly DockerClient _dockerClient;
-        private readonly SshClient _sshClient;
         private string DockerApiUri()
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
@@ -41,11 +38,10 @@ namespace Edge.Controllers
         }
        
 
-        public HomeController(ILogger<HomeController> logger)
+        public DashboardController(ILogger<DashboardController> logger)
         {
             _logger = logger;
             _dockerClient = new DockerClientConfiguration(new Uri(DockerApiUri())).CreateClient();
-            _sshClient = new SshClient("192.168.40.40", "cisco", "cisco");
         }
 
         public IActionResult Index()
@@ -53,7 +49,7 @@ namespace Edge.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult RouterList()
         {
             return View();
         }
@@ -83,109 +79,25 @@ namespace Edge.Controllers
 
             return View();
         }
-        #region Cisco manager
-        public ActionResult ShowApplicationList()
+
+        public ActionResult CiscoSwitchConnectionSSH()
         {
 
-            var result = "";
-                _sshClient.Connect();
-                using (SshCommand cmd = _sshClient.CreateCommand("show app-hosting list"))
+            using (SshClient ssh = new SshClient("192.168.40.40", "cisco", "cisco"))
+            {
+                ssh.Connect();
+                using (SshCommand cmd = ssh.CreateCommand("show vlan"))
                 {
                     cmd.Execute();
                     Console.WriteLine("Command>" + cmd.CommandText);
                     Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
-                    result = cmd.Result;
-                    Console.WriteLine(result);
+                    var toto = cmd.Result;
+                    Console.WriteLine(toto);
                 }
-            _sshClient.Disconnect();
-            var data = JObject.Parse(result);
-            ViewBag.Result = (result);
-            return View("Index");
-        }
-
-        public ActionResult ShowApplicationDetail(string appName)
-        {
-            var result = "";
-            _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"show app-hosting detail appid {appName}"))
-            {
-                cmd.Execute();
-                Console.WriteLine("Command>" + cmd.CommandText);
-                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
-                result = cmd.Result;
-                Console.WriteLine(result);
+                ssh.Disconnect();
             }
-            _sshClient.Disconnect();
-            ViewBag.Result = (result);
-            return View("Index");
-        }
-
-        public ActionResult StopApplication(string appName)
-        {
-            var result = "";
-            _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"app-hosting stop appid {appName}"))
-            {
-                cmd.Execute();
-                Console.WriteLine("Command>" + cmd.CommandText);
-                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
-                result = cmd.Result;
-                Console.WriteLine(result);
-            }
-            _sshClient.Disconnect();
-            ViewBag.Result = (result);
-            return View("Index");
-        }
-
-        public ActionResult StartApplication(string appName)
-        {
-            var result = "";
-            _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"app-hosting start appid {appName}"))
-            {
-                cmd.Execute();
-                Console.WriteLine("Command>" + cmd.CommandText);
-                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
-                result = cmd.Result;
-                Console.WriteLine(result);
-            }
-            _sshClient.Disconnect();
-            ViewBag.Result = (result);
-            return View("Index");
-        }
-
-        public ActionResult ActivateApplication(string appName)
-        {
-            var result = "";
-            _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"app-hosting activate appid {appName}"))
-            {
-                cmd.Execute();
-                Console.WriteLine("Command>" + cmd.CommandText);
-                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
-                result = cmd.Result;
-                Console.WriteLine(result);
-            }
-            _sshClient.Disconnect();
-            ViewBag.Result = (result);
-            return View("Index");
-        }
-
-        public ActionResult DeactivateApplication(string appName)
-        {
-            var result = "";
-            _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"app-hosting deactivate appid {appName}"))
-            {
-                cmd.Execute();
-                Console.WriteLine("Command>" + cmd.CommandText);
-                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
-                result = cmd.Result;
-                Console.WriteLine(result);
-            }
-            _sshClient.Disconnect();
-            ViewBag.Result = (result);
-            return View("Index");
+            return View("Dashboard");
+    
         }
 
         public async Task<ActionResult> PullImage()
@@ -199,10 +111,8 @@ namespace Edge.Controllers
                     new AuthConfig(),
                     new Progress<JSONMessage>());
 
-            return View("Home");
+            return View("Dashboard");
         }
-
-        #endregion
 
         public async Task<ActionResult> ContainerListAsync()
         {

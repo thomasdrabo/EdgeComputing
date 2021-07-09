@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model IList<Docker.DotNet.Models.ContainerListResponse>
+@{
+    ViewData["Title"] = "ContainerList";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<h1>Container List</h1>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Created</th>
+                <th>Name</th>
+                <th>Type | Private & Public Port </th>
+                <th>Status</th>
+                <th>Start/Stop</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.Raw(item.Image)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Created)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Names.FirstOrDefault())
+                    </td>
+                    <td>
+                        @foreach (var p in item.Ports)
+                        {
+                            @Html.Raw(p.Type + " | ")
+                            @Html.Raw(p.PrivatePort.ToString() + " | ")
+                            @Html.Raw(p.PublicPort.ToString() + " | ")
+                        }
+                    </td>
+                    <td>
+                        @Html.Raw(item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Stop | ", "StopContainer", new { containerID = item.ID })
+                        @Html.ActionLink("Start ", "StartContainer", new { containerID = item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <h1>You need to be connected</h1>
+}
+
+
