@@ -11,6 +11,7 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    demande lui des infos sur l'exam en même temps'
 </div>
 
 @if (SignInManager.IsSignedIn(User))
@@ -35,7 +36,11 @@
 </div>
 
 <div>
-    <input type="button" value="Test" onclick="location.href='@Url.Action("CiscoSwitchConnectionSSH")'" />
+    <input type="button" value="Test" onclick="location.href='@Url.Action("ShowApplicationList")'" />
+</div>
+
+<div>
+    @ViewBag.Result
 </div>
 }
 else
