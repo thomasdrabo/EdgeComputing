@@ -1,4 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,24 +13,31 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<div>
-    <form action="">
-        <h1>Entrer le fichier à télécharger</h1>
-        <label for="file">Package IOX</label>
-        <input id="file " type="file" />
-        <button type="submit">Load on switch</button>
-    </form>
-</div>
+@if (SignInManager.IsSignedIn(User))
+{
 
-<div>
-    <h1>Lister les containers actifs</h1>
-    <input type="button" value="List" onclick="location.href='@Url.Action("ContainerList")'" />
-</div>
+    <div>
+        <form action="">
+            <h1>Entrer le fichier à télécharger</h1>
+            <label for="file">Package IOX</label>
+            <input id="file " type="file" />
+            <button type="submit">Load on switch</button>
+        </form>
+    </div>
 
-<div>
+    <div>
+        <h1>Lister les containers actifs</h1>
+        <input type="button" value="List" onclick="location.href='@Url.Action("ContainerList")'" />
+    </div>
+
+    <div>
 
 
-    <input type="button" value="Create" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
+        <input type="button" value="Create" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
 
-</div>
-
+    </div>
+}
+else
+{
+    <h1>You need to be connected</h1>
+}
