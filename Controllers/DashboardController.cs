@@ -14,9 +14,9 @@ using Renci.SshNet;
 
 namespace Edge.Controllers
 {
-    public class RouterController : Controller
+    public class DashboardController : Controller
     {
-        private readonly ILogger<RouterController> _logger;
+        private readonly ILogger<DashboardController> _logger;
         private readonly DockerClient _dockerClient;
         private readonly SshClient _sshClient;
 
@@ -40,7 +40,7 @@ namespace Edge.Controllers
         }
        
 
-        public RouterController(ILogger<RouterController> logger)
+        public DashboardController(ILogger<DashboardController> logger)
         {
             _logger = logger;
             _dockerClient = new DockerClientConfiguration(new Uri(DockerApiUri())).CreateClient();
@@ -48,6 +48,11 @@ namespace Edge.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult RouterList()
         {
             return View();
         }
@@ -94,7 +99,7 @@ namespace Edge.Controllers
                 }
                 ssh.Disconnect();
             }
-            return View("Router");
+            return View("Dashboard");
     
         }
 
@@ -119,7 +124,7 @@ namespace Edge.Controllers
             {
                 var model = new ApplicationList();
                 model.AppID = data[i];
-                model.State = data[i+1];
+                model.State = data[i + 1];
                 i += 2;
                 list.Add(model);
             }
@@ -127,11 +132,26 @@ namespace Edge.Controllers
             return View("ApplicationList", list);
         }
 
-        public ActionResult ShowApplicationDetail(string appName)
+
+        public async Task<ActionResult> PullImage()
+        {
+            await _dockerClient.Images
+                .CreateImageAsync(new ImagesCreateParameters
+                {
+                    FromImage = "amazon/dynamodb-local",
+                    Tag = "latest"
+                },
+                    new AuthConfig(),
+                    new Progress<JSONMessage>());
+
+            return View("Dashboard");
+        }
+
+        public ActionResult StartApplication(string appName)
         {
             var result = "";
             _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"show app-hosting detail appid {appName}"))
+            using (SshCommand cmd = _sshClient.CreateCommand($"app-hosting start appid {appName}"))
             {
                 cmd.Execute();
                 Console.WriteLine("Command>" + cmd.CommandText);
@@ -158,14 +178,14 @@ namespace Edge.Controllers
             }
             _sshClient.Disconnect();
             ViewBag.Result = (result);
-            return View("/Router/ApplicationList");
+            return View("Index");
         }
 
-        public ActionResult StartApplication(string appName)
+        public ActionResult ShowApplicationDetail(string appName)
         {
             var result = "";
             _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"app-hosting start appid {appName}"))
+            using (SshCommand cmd = _sshClient.CreateCommand($"show app-hosting detail appid {appName}"))
             {
                 cmd.Execute();
                 Console.WriteLine("Command>" + cmd.CommandText);
@@ -175,7 +195,7 @@ namespace Edge.Controllers
             }
             _sshClient.Disconnect();
             ViewBag.Result = (result);
-            return View("/Router/ApplicationList");
+            return View("Index");
         }
 
         public ActionResult ActivateApplication(string appName)
@@ -192,38 +212,7 @@ namespace Edge.Controllers
             }
             _sshClient.Disconnect();
             ViewBag.Result = (result);
-            return View("/Router/ApplicationList");
-        }
-
-        public ActionResult DeactivateApplication(string appName)
-        {
-            var result = "";
-            _sshClient.Connect();
-            using (SshCommand cmd = _sshClient.CreateCommand($"app-hosting deactivate appid {appName}"))
-            {
-                cmd.Execute();
-                Console.WriteLine("Command>" + cmd.CommandText);
-                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
-                result = cmd.Result;
-                Console.WriteLine(result);
-            }
-            _sshClient.Disconnect();
-            ViewBag.Result = (result);
-            return View("~/Views/Router/ApplicationList");
-        }
-
-        public async Task<ActionResult> PullImage()
-        {
-            await _dockerClient.Images
-                .CreateImageAsync(new ImagesCreateParameters
-                {
-                    FromImage = "amazon/dynamodb-local",
-                    Tag = "latest"
-                },
-                    new AuthConfig(),
-                    new Progress<JSONMessage>());
-
-            return View("Router");
+            return View("Index");
         }
 
         public async Task<ActionResult> ContainerListAsync()
