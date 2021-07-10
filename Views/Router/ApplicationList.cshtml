@@ -1,0 +1,44 @@
+﻿@model List<Edge.Models.ApplicationList> 
+
+@{
+    ViewData["Title"] = "ApplicationList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ApplicationList</h1>
+
+<p>
+    <a asp-action="Create">Install New Application</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                APPID
+            </th>
+            <th>
+                State
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.ActionLink("Start", "StartApplication", new { appName = item.AppID }) |
+                    @Html.ActionLink("Activate", "ActivateApplication", new { appName = item.AppID }) |
+                    @Html.ActionLink("Details", "Details", new { appName = item.AppID }) |
+                    @Html.ActionLink("Stop", "StopApplication", new { appName = item.AppID }) |
+                    @Html.ActionLink("Deactivate", "DeactivateApplication", new { appName = item.AppID  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

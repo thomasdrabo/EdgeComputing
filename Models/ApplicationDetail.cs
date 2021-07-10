@@ -8,17 +8,11 @@ namespace Edge.Models
 {
     public class ApplicationDetail
     {
-        public string AppID;
-        public string Owner;
-        public string State;
-        //public JObject Application
-        //{
-        //    public string Type;
-        //    public string Name;
-        //    public string Version;
-        //    public string Description;
-        //    public string Path;
-        //    public string URLPath;
-        //}
+        public string AppID { get; set; }
+        public string Owner { get; set; }
+        public string State { get; set; }
+        public Details Application { get; set; }
+        public string ActivatedProfileName { get; set; }
+        public Ressource RessourceReservation { get; set; }
     }
 }

@@ -51,7 +51,27 @@
             </div>
             <div class="form-group">
                 <label for="file">Tester des trucs</label>
-                <input type="button" class="btn btn-light w-100" value="Test" onclick="location.href='@Url.Action("CiscoSwitchConnectionSSH")'" />
+                <input type="button" class="btn btn-light w-100" value="Test" onclick="location.href='@Url.ActionLink("ShowApplicationList", "Router")'" />
+                <small>(conséquence inconnu, pouvant déformer irrémédiablement le continuum spatio-temporel, à utiliser avec parcimonie.)</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 p-2">
+        <div class="card p-2">
+            <h5>Gestion des containers locaux</h5>
+            <hr class="mt-1 mb-2" />
+            <p>Ici vous pouvez accéder aux containers présent sur votre machine.</p>
+            <div class="form-group">
+                <label for="file">Liste des containers</label>
+                <input type="button" class="btn btn-light w-100" value="Liste" onclick="location.href='@Url.Action("ContainerList")'" />
+            </div>
+            <div class="form-group">
+                <label for="file">Créer un package IOX</label>
+                <input type="button" class="btn btn-light w-100" value="Créer" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
+            </div>
+            <div class="form-group">
+                <label for="file">Tester des trucs</label>
+                <input type="button" class="btn btn-light w-100" value="Test" onclick="location.href='@Url.ActionLink("ShowApplicationList", "Router")'" />
                 <small>(conséquence inconnu, pouvant déformer irrémédiablement le continuum spatio-temporel, à utiliser avec parcimonie.)</small>
             </div>
         </div>
