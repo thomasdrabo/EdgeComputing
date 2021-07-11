@@ -1,6 +1,35 @@
 ﻿@{
     ViewData["Title"] = "Contact";
 }
-<h2>@ViewData["Title"]</h2>
 
-<p>Have you a question ? Any suggestion ?</p>
+<section class="min-h-100">
+    <div class="h-100">
+        <div class="row h-100">
+            <div class="contact_page col-md-6 contact-card h-100">
+                <h2 class="mt-5 ml-5">@ViewData["Title"]</h2>
+
+                <form action="contact.php" method="POST" class="p-3 contact_form mt-5 bg-white card rounded">
+                    <h6>An idea ? Any suggestion or question are welcome, get in touch.</h6>
+                    <div class="form-group">
+                        <label for="name">Firstname</label>
+                        <input class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Lastname</label>
+                        <input class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="mail">Email</label>
+                        <input class="form-control" type="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Message</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-secondary">Submit</button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</section>

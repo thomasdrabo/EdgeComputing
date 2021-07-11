@@ -15,9 +15,9 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom shadow box-shadow">
-            <div class="col-12">
+            <div class="col-12 row">
                 <a class="navbar-brand text-left" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo.png" class="w-50" alt="logo-union"/>
+                    <img src="~/images/logo.png" class="w-100" alt="logo-union"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -40,58 +40,57 @@
             </div>
         </nav>
     </header>
-    <div class="h-100">
-        <main role="main" class="pb-3 h-100">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer pt-3 bg-dark white-txt">
-        <div class="container">
-            <div class="row justify-content-between">
-                <article class="col-3">
-                    <ul>
-                        <li>
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="#">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#">Contact</a>
-                        </li>
-                    </ul>
-                </article>
-                <article class="col-3">
-                    <ul>
-                        <li>
-                            <a href="#">Register</a>
-                        </li>
-                        <li>
-                            <a href="#">Login</a>
-                        </li>
-                        <li>
-                            <a href="#">Policy</a>
-                        </li>
-                    </ul>
-                </article>
-                <article class="col-3">
-                    <ul>
-                        <li>
-                            <a href="#">Partner</a>
-                        </li>
-                        <li>
-                            <a href="#">Our story</a>
-                        </li>
-                        <li>
-                            <a href="#">We hiring !</a>
-                        </li>
-                    </ul>
-                </article>
-                <small class="col-12 white_txt text-center">Union© website, all rights reserved</small>
+    <main role="main" class="main">
+        @RenderBody()
+        <footer class="footer pt-3 bg-dark white-txt">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <article class="col-3">
+                        <ul>
+                            <li>
+                                <a href="#">Home</a>
+                            </li>
+                            <li>
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </article>
+                    <article class="col-3">
+                        <ul>
+                            <li>
+                                <a href="#">Register</a>
+                            </li>
+                            <li>
+                                <a href="#">Login</a>
+                            </li>
+                            <li>
+                                <a href="#">Policy</a>
+                            </li>
+                        </ul>
+                    </article>
+                    <article class="col-3">
+                        <ul>
+                            <li>
+                                <a href="#">Partner</a>
+                            </li>
+                            <li>
+                                <a href="#">Our story</a>
+                            </li>
+                            <li>
+                                <a href="#">We hiring !</a>
+                            </li>
+                        </ul>
+                    </article>
+                    <small class="col-12 white_txt text-center">Union© website, all rights reserved</small>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </main>
+
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

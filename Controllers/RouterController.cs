@@ -113,6 +113,21 @@ namespace Edge.Controllers
                 Console.WriteLine(result);
             }
             _sshClient.Disconnect();
+
+            var log = "";
+            _sshClient.Connect();
+            using (SshCommand cmd = _sshClient.CreateCommand($"show log"))
+            {
+                cmd.Execute();
+                Console.WriteLine("Command>" + cmd.CommandText);
+                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
+                log = cmd.Result;
+                Console.WriteLine(log);
+            }
+            _sshClient.Disconnect();
+            ViewBag.Logs = (log);
+
+
             var data = result.Split().Where(x => x.Length > 0).Skip(4).ToList();
             var i = 0;
             var list = new List<ApplicationList>();

@@ -10,7 +10,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (SignInManager.IsSignedIn(User))
+<div class="container my-5">
+    @if (SignInManager.IsSignedIn(User))
 {
     <h1>ApplicationList</h1>
 
@@ -51,10 +52,21 @@
     </table>
     <div class="card p-2">
         <h5>Logs du routeur</h5>
-        @Html.ActionLink("Show", "GetLogs", new { })
+        <div class="log_display">
+            @if (!string.IsNullOrWhiteSpace(ViewBag.Logs))
+            {
+                var lines = ViewBag.Logs.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in lines)
+                {
+                    <p>@line</p>
+                }
+            }
+        </div>
     </div>
 }
 else
 {
     <h1>You must be connected for access to this page.</h1>
 }
+
+</div>
