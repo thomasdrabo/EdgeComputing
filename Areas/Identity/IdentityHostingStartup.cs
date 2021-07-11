@@ -1,5 +1,6 @@
 ﻿using System;
 using Edge.Data;
+using Edge.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -15,12 +16,21 @@ namespace Edge.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<EdgeContext>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("EdgeContextConnection")));
+                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+                
+                //services.AddDefaultIdentity<ApplicationUser>(options =>
+                //{
+                //    options.SignIn.RequireConfirmedAccount = true;
+                //    options.User.RequireUniqueEmail = false;
+                //})
+                //.AddEntityFrameworkStores<ApplicationDbContext>();
+                // services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<EdgeContext>();
             });
         }
     }
