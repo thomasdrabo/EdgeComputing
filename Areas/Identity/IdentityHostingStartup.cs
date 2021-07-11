@@ -14,13 +14,13 @@ namespace Edge.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<ApplicationDbContext>(options =>
+                services.AddDbContext<EdgeContext>(options =>
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("EdgeContextConnection")));
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-                
+                //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                //.AddRoles<IdentityRole>()
+                //.AddEntityFrameworkStores<ApplicationDbContext>();
+
                 //services.AddDefaultIdentity<ApplicationUser>(options =>
                 //{
                 //    options.SignIn.RequireConfirmedAccount = true;
@@ -29,9 +29,9 @@ namespace Edge.Areas.Identity
                 //.AddEntityFrameworkStores<ApplicationDbContext>();
                 // services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                                 .AddRoles<IdentityRole>()
-                                .AddEntityFrameworkStores<EdgeContext>()
+                                .AddEntityFrameworkStores<EdgeContext>();
             });
         }
     }

@@ -11,7 +11,7 @@ namespace Edge.Data
 {
     public class EdgeContext : IdentityDbContext<IdentityUser>
     {
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public EdgeContext(DbContextOptions<EdgeContext> options)
             : base(options)
         {
