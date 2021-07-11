@@ -1,8 +1,7 @@
-﻿using System;
-using Edge.Data;
+﻿using Edge.Data;
+using Edge.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,9 +17,21 @@ namespace Edge.Areas.Identity
                 services.AddDbContext<EdgeContext>(options =>
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("EdgeContextConnection")));
+                //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                //.AddRoles<IdentityRole>()
+                //.AddEntityFrameworkStores<ApplicationDbContext>();
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<EdgeContext>();
+                //services.AddDefaultIdentity<ApplicationUser>(options =>
+                //{
+                //    options.SignIn.RequireConfirmedAccount = true;
+                //    options.User.RequireUniqueEmail = false;
+                //})
+                //.AddEntityFrameworkStores<ApplicationDbContext>();
+                // services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                                .AddRoles<IdentityRole>()
+                                .AddEntityFrameworkStores<EdgeContext>();
             });
         }
     }

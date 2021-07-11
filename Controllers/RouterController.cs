@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Edge.Models;
 using Docker.DotNet;
-using Docker.DotNet.Models;
-using System.IO;
 using System.Runtime.InteropServices;
 using Renci.SshNet;
-using Newtonsoft.Json.Linq;
 
 namespace Edge.Controllers
 {
@@ -48,6 +44,7 @@ namespace Edge.Controllers
             _sshClient = new SshClient("192.168.40.40", "cisco", "cisco");
         }
 
+        //[Authorize(Roles = "Manager")]
         public IActionResult Index()
         {
             return View();

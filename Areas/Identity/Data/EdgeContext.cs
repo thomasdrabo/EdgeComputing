@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Edge.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace Edge.Data
 {
     public class EdgeContext : IdentityDbContext<IdentityUser>
     {
+        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public EdgeContext(DbContextOptions<EdgeContext> options)
             : base(options)
         {
