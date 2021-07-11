@@ -1,47 +1,60 @@
-﻿@model List<Edge.Models.ApplicationList> 
+﻿@model List<Edge.Models.ApplicationList>
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 
 @{
     ViewData["Title"] = "ApplicationList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ApplicationList</h1>
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>ApplicationList</h1>
 
-<p>
-    <a asp-action="Create">Install New Application</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                APPID
-            </th>
-            <th>
-                State
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <p>
+        <a asp-action="Create">Install New Application</a>
+    </p>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.State)
-                </td>
-                <td>
-                    @Html.ActionLink("Start", "StartApplication", new { appName = item.AppID }) |
-                    @Html.ActionLink("Activate", "ActivateApplication", new { appName = item.AppID }) |
-                    @Html.ActionLink("Details", "Details", new { appName = item.AppID }) |
-                    @Html.ActionLink("Stop", "StopApplication", new { appName = item.AppID }) |
-                    @Html.ActionLink("Deactivate", "DeactivateApplication", new { appName = item.AppID  })
-                </td>
+                <th>
+                    APPID
+                </th>
+                <th>
+                    State
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
-<div class="card p-2">
-    <h5>Logs du routeur</h5>
-</div>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AppID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Start", "StartApplication", new { appName = item.AppID }) |
+                        @Html.ActionLink("Activate", "ActivateApplication", new { appName = item.AppID }) |
+                        @Html.ActionLink("Details", "ShowApplicationDetail", new { appName = item.AppID }) |
+                        @Html.ActionLink("Stop", "StopApplication", new { appName = item.AppID }) |
+                        @Html.ActionLink("Deactivate", "DeactivateApplication", new { appName = item.AppID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="card p-2">
+        <h5>Logs du routeur</h5>
+        @Html.ActionLink("Show", "GetLogs", new { })
+    </div>
+}
+else
+{
+    <h1>You must be connected for access to this page.</h1>
+}

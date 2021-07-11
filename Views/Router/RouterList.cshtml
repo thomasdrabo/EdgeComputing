@@ -9,10 +9,10 @@
     Layout = "../Shared/_Layout.cshtml";
 }
 
-<h1>Container List</h1>
-
 @if (SignInManager.IsSignedIn(User))
 {
+    <h1>Router List</h1>
+
     <table class="table">
         <thead>
             <tr>
@@ -60,7 +60,7 @@
 }
 else
 {
-    <h1>You need to be connected</h1>
+<h1>You must be connected for access to this page.</h1>
 }
 
 

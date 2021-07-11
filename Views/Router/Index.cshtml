@@ -7,13 +7,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <h2 class="mr-auto">Dashboard</h2>
-    <p>Orchestrez les routeurs depuis ce panneau.</p>
-</div>
-
 @if (SignInManager.IsSignedIn(User))
 {
+    <div>
+        <h2 class="mr-auto">Dashboard</h2>
+        <p>Orchestrez les routeurs depuis ce panneau.</p>
+    </div>
+
+
     <section class="row">
         <div class="col-6 p-2">
             <form class="card p-2">
@@ -51,32 +52,32 @@
                         <tr>
                             <th>Nom</th>
                             <th>Date de création</th>
-                            
+
                             <th>Type | Private & Public Port </th>
                             <th>Status</th>
                             <th>Start/Stop</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         <tr>
                             <td>
-                               Routeur A1
+                                Routeur A1
                             </td>
                             <td>
-                               10/07/2021 11:32:47
+                                10/07/2021 11:32:47
                             </td>
                             <td>
-                               Type | Privé | 8080
+                                Type | Privé | 8080
                             </td>
                             <td>
-                               Allumé
+                                Allumé
                             </td>
                             <td>
                                 start | stop
                             </td>
                         </tr>
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -85,7 +86,7 @@
 }
 else
 {
-    <h1>You need to be connected</h1>
+    <h1>You must be connected for access to this page.</h1>
     <img src="~/images/bg-banner.jpg" class="img" alt="My image" />
 }
 

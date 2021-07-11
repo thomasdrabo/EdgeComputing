@@ -14,5 +14,6 @@ namespace Edge.Models
         public Details Application { get; set; }
         public string ActivatedProfileName { get; set; }
         public Ressource RessourceReservation { get; set; }
+        public Device AttachedDevices { get; set; }
     }
 }

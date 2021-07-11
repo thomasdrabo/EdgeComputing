@@ -11,6 +11,7 @@ using Docker.DotNet.Models;
 using System.IO;
 using System.Runtime.InteropServices;
 using Renci.SshNet;
+using Newtonsoft.Json.Linq;
 
 namespace Edge.Controllers
 {
@@ -63,20 +64,20 @@ namespace Edge.Controllers
             return View();
         }
 
-        public async Task<ActionResult> CreateImageAsync()
-        {
-            DockerClient client = new DockerClientConfiguration()
-                .CreateClient();
-            //Stream stream = await client.Images.CreateImageAsync(
-            //new ImagesCreateParameters
-            //{
-            //    FromImage = "fedora/memcached",
-            //    Tag = "alpha"
-            //},
-            //null);
+        //public async Task<ActionResult> CreateImageAsync()
+        //{
+        //    DockerClient client = new DockerClientConfiguration()
+        //        .CreateClient();
+        //    //Stream stream = await client.Images.CreateImageAsync(
+        //    //new ImagesCreateParameters
+        //    //{
+        //    //    FromImage = "fedora/memcached",
+        //    //    Tag = "alpha"
+        //    //},
+        //    //null);
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public ActionResult CiscoSwitchConnectionSSH()
         {
@@ -140,8 +141,26 @@ namespace Edge.Controllers
                 Console.WriteLine(result);
             }
             _sshClient.Disconnect();
-            ViewBag.Result = (result);
-            return View("Index");
+            var data = result.Trim().Split().Where(x => x.Length > 0).ToList();
+            var model = new ApplicationDetail();
+            model.RessourceReservation = new Ressource();
+            model.Application = new Details();
+            model.AppID = appName;
+            model.Owner = data[6];
+            model.State = data[9];
+            model.Application.Type = data[13];
+            model.Application.Name = data[16];
+            model.Application.Version = data[19];
+            model.Application.Description = data[22]+ " " + data[23] + " " + data[24] + " " + data[25] + " " + data[26];
+            model.Application.Path = string.Empty;
+            model.Application.URLPath = string.Empty;
+            model.RessourceReservation.Memory = data[41]+data[42];
+            model.RessourceReservation.Disk = data[45]+data[46];
+            model.RessourceReservation.CPU = data[49]+data[50];
+            model.RessourceReservation.CPUPercent = data[53]+data[54];
+            model.RessourceReservation.VCPU = data[57];
+            ViewBag.Name = appName;
+            return View("ApplicationDetail", model);
         }
 
         public ActionResult StopApplication(string appName)
@@ -212,65 +231,23 @@ namespace Edge.Controllers
             return RedirectToAction("ShowApplicationList");
         }
 
-        public async Task<ActionResult> PullImage()
+        public ActionResult GetLogs()
         {
-            await _dockerClient.Images
-                .CreateImageAsync(new ImagesCreateParameters
-                {
-                    FromImage = "amazon/dynamodb-local",
-                    Tag = "latest"
-                },
-                    new AuthConfig(),
-                    new Progress<JSONMessage>());
-
-            return View("Router");
+            var result = "";
+            _sshClient.Connect();
+            using (SshCommand cmd = _sshClient.CreateCommand($"show log"))
+            {
+                cmd.Execute();
+                Console.WriteLine("Command>" + cmd.CommandText);
+                Console.WriteLine("Return Value = {0}", cmd.ExitStatus);
+                result = cmd.Result;
+                Console.WriteLine(result);
+            }
+            _sshClient.Disconnect();
+            ViewBag.Logs = (result);
+            return View("RouterLogs");
         }
 
-        public async Task<ActionResult> ContainerListAsync()
-        {
 
-            DockerClient client = new DockerClientConfiguration()
-                .CreateClient();
-            IList<ContainerListResponse> containers = await client.Containers.ListContainersAsync(
-            new ContainersListParameters()
-            {
-                Limit = 10,
-            });
-            
-            return PartialView(containers);
-        }
-
-        public async Task<ActionResult> StopContainer(string containerID)
-        {
-            try
-            {
-                await _dockerClient.Containers.KillContainerAsync(containerID, new ContainerKillParameters());
-                await ContainerListAsync();
-                return View("ContainerList");
-            }
-            catch(Exception e)
-            {
-                _logger.LogError("Une erreur est survenue : " + e.Message);
-                await ContainerListAsync();
-                return View("ContainerList");
-            }
-        }
-
-        public async Task<ActionResult> StartContainer(string containerID)
-        {
-            try
-            {
-                await _dockerClient.Containers.StartContainerAsync(containerID, new ContainerStartParameters());
-                await ContainerListAsync();
-                return View("ContainerList");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Une erreur est survenue : " + e.Message);
-                await ContainerListAsync();
-                return View("ContainerList");
-            }
-
-        }
     }
 }

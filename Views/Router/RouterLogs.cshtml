@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "RouterLogs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>RouterLogs</h1>
+
+<h2>
+    @if (!string.IsNullOrWhiteSpace(ViewBag.Logs))
+    {
+        var lines = ViewBag.Logs.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        foreach (var line in lines)
+        {
+            <p>@line</p>
+        }
+    }
+</h2>
+

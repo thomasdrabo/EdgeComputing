@@ -1,0 +1,68 @@
+﻿@model Edge.Models.ApplicationDetail
+
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "ApplicationDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>Application Details for @ViewBag.Name</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    APPID
+                </th>
+                <th>
+                    Owner
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    Details
+                <th>
+                    Resources Reservations
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Model.AppID
+                </td>
+                <td>
+                    @Model.Owner
+                </td>
+                <td>
+                    @Model.State
+                </td>
+                <td>
+                    <p><strong>Type : </strong>@Model.Application.Type</p>
+                    <p><strong>Name : </strong>@Model.Application.Name</p>
+                    <p><strong>Version : </strong>@Model.Application.Version</p>
+                    <p><strong>Description : </strong>@Model.Application.Description</p>
+                    <p><strong>Path : </strong>@Model.Application.Path</p>
+                    <p><strong>URLPath : </strong>@Model.Application.URLPath</p>
+                </td>
+                <td>
+                    <p><strong>Memory : </strong>@Model.RessourceReservation.Memory</p>
+                    <p><strong>Disk : </strong>@Model.RessourceReservation.Disk</p>
+                    <p><strong>CPU : </strong>@Model.RessourceReservation.CPU</p>
+                    <p><strong>CPU Percent : </strong>@Model.RessourceReservation.CPUPercent</p>
+                    <p><strong>VCPU : </strong>@Model.RessourceReservation.VCPU</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+<h1>You must be connected for access to this page.</h1>
+}
