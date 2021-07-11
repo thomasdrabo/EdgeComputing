@@ -69,3 +69,64 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/* CUSTOM CSS */
+
+*{
+    font-family: overpass;
+}
+
+html, body {
+    margin: 0 auto;
+    height: 100%;
+}
+
+#home_page {
+    background-image: url("../images/bgd__connected-home.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    height: 50%
+}
+
+#home_page h1 span {
+    font-size: 3.8rem;
+}
+
+.white_txt{
+    color: #fff;
+}
+
+.white_bg{
+    background-color: white;
+}
+
+.home_card {
+    position: relative;
+    top: 0;
+    box-shadow: unset;
+    transition: all 0.2s;
+}
+
+    .home_card:hover {
+        top: -3px;
+        box-shadow: 0px -3px 25px rgba(255, 255, 255, 0.473);
+        transition: all 0.2s;
+    }
+
+.footer{
+    position: inherit!important;
+}
+
+.footer li{
+    list-style: none;
+}
+
+.footer a {
+    color: white;
+}
+
+.footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
