@@ -8,7 +8,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container my-5">
+<div style="height:100vh;" class="container my-5">
     @if (SignInManager.IsSignedIn(User))
     {
         <div>
@@ -25,16 +25,16 @@
                     <p>Here you can export an IOX package to an CISCO Catalyst router.</p>
                     <div class="form-group">
                         <label for="file">IOX package</label>
-                        <input id="file" class="form-control-file" type="file" />
+                        <input, disabled id="file" class="form-control-file" type="file" />
                     </div>
-                    <button class="btn p-1 btn-light" type="submit">Upload</button>
+                    <button disabled class="btn p-1 btn-light" type="submit">Upload</button>
                 </form>
                 <div class="card mt-3 p-2">
                     <h5>Router manage</h5>
                     <hr class="mt-1 mb-2" />
                     <p>Access routers.</p>
                     <div class="form-group">
-                        <a class="btn btn-light" asp-area="" asp-controller="Router" asp-action="Index">Manage</a>
+                        <a class="btn btn-light col-12" asp-area="" asp-controller="Router" asp-action="Index">Manage</a>
                     </div>
                 </div>
             </div>
@@ -49,12 +49,9 @@
                     </div>
                     <div class="form-group">
                         <label for="file">Create IOX package</label>
-                        <input type="button" class="btn btn-light w-100" value="Create" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
+                        <input disabled type="button" class="btn btn-light w-100" value="Create" onclick="location.href='@Url.Action("HomeController/PullImage")'" />
                     </div>
-                    <div class="form-group">
-                        <label for="file">Tester des trucs</label>
-                        <input type="button" class="btn btn-light w-100" value="Test" onclick="location.href='@Url.ActionLink("ShowApplicationList", "Router")'" />
-                    </div>
+                   
                 </div>
             </div>
 

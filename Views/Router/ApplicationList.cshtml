@@ -10,13 +10,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container my-5">
+<div style="height:100vh;" class="container my-5">
     @if (SignInManager.IsSignedIn(User))
 {
-    <h1>ApplicationList</h1>
+    <h1>Applications</h1>
 
     <p>
-        <a asp-action="Create">Install New Application</a>
+        <button class="btn btn-light" disabled>Install New Application</button>
     </p>
     <table class="table">
         <thead>

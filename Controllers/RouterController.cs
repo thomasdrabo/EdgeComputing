@@ -61,21 +61,6 @@ namespace Edge.Controllers
             return View();
         }
 
-        //public async Task<ActionResult> CreateImageAsync()
-        //{
-        //    DockerClient client = new DockerClientConfiguration()
-        //        .CreateClient();
-        //    //Stream stream = await client.Images.CreateImageAsync(
-        //    //new ImagesCreateParameters
-        //    //{
-        //    //    FromImage = "fedora/memcached",
-        //    //    Tag = "alpha"
-        //    //},
-        //    //null);
-
-        //    return View();
-        //}
-
         public ActionResult CiscoSwitchConnectionSSH()
         {
 

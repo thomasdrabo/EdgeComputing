@@ -2,14 +2,14 @@
 
 @using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "ApplicationDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container my-5">
+<div style="height:100vh;" class="container my-5">
     @if (SignInManager.IsSignedIn(User))
     {
         <h1>Application Details for @ViewBag.Name</h1>

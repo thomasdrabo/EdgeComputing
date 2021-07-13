@@ -55,14 +55,9 @@ button.accept-policy {
 -------------------------------------------------- */
 html {
   position: relative;
-  min-height: 100%;
+
 }
 
-body {
-  /* Margin bottom by footer height */
-  height: 100%;
-  
-}
 .footer {
   position: absolute;
   bottom: 0;
@@ -80,7 +75,7 @@ body {
 }
 
 html, body {
-    min-height: 100%;
+    height: 100%;
 }
 
 .main {
@@ -151,7 +146,7 @@ html, body {
 }
 
 .log_display{
-    height: 350px;
+    height: 225px;
     overflow-y: scroll;
 }
 

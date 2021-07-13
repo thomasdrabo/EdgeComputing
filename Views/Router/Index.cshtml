@@ -7,13 +7,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container my-5">
+<div style="height:100vh;" class="container my-5">
 
     @if (SignInManager.IsSignedIn(User))
     {
         <div>
-            <h2 class="mr-auto">Dashboard</h2>
-            <p>Welcome to your dashboard</p>
+            <h2 class="mr-auto">Manage routers</h2>
+            <p>Welcome to your router dashboard</p>
         </div>
 
 
@@ -39,7 +39,7 @@
             </div>
             <div class="col-6 p-2">
                 <div class="card p-2">
-                    <h5>Gestion des Applications sur le routeur</h5>
+                    <h5>Manage router's applications</h5>
                     <div class="form-group">
                         <input type="button" class="btn btn-light w-100" value="Manage app" onclick="location.href='@Url.ActionLink("ShowApplicationList", "Router")'" />
                     
